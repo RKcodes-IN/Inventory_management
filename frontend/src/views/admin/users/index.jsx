@@ -35,9 +35,9 @@ import {
 } from "@chakra-ui/react";
 
 // Custom components
-import Banner from "views/admin/marketplace/components/Banner";
-import TableTopCreators from "views/admin/marketplace/components/TableTopCreators";
-import HistoryItem from "views/admin/marketplace/components/HistoryItem";
+import Banner from "views/admin/users/components/Banner";
+import TableTopCreators from "views/admin/users/components/TableTopCreators";
+import HistoryItem from "views/admin/users/components/HistoryItem";
 import NFT from "components/card/NFT";
 import Card from "components/card/Card.js";
 
@@ -52,10 +52,10 @@ import Avatar1 from "assets/img/avatars/avatar1.png";
 import Avatar2 from "assets/img/avatars/avatar2.png";
 import Avatar3 from "assets/img/avatars/avatar3.png";
 import Avatar4 from "assets/img/avatars/avatar4.png";
-import tableDataTopCreators from "views/admin/marketplace/variables/tableDataTopCreators.json";
-import { tableColumnsTopCreators } from "views/admin/marketplace/variables/tableColumnsTopCreators";
+import tableDataTopCreators from "views/admin/users/variables/tableDataTopCreators.json";
+import { tableColumnsTopCreators } from "views/admin/users/variables/tableColumnsTopCreators";
 
-export default function Users() {
+export default function Marketplace() {
   // Chakra Color Mode
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const textColorBrand = useColorModeValue("brand.500", "white");
@@ -63,14 +63,13 @@ export default function Users() {
     <Box pt={{ base: "180px", md: "80px", xl: "80px" }}>
       {/* Main Fields */}
       <Grid
-        mb='20px'
-        gridTemplateColumns={{ xl: "repeat(1, 1fr)", "2xl": "1fr 0.46fr" }}
-        gap={{ base: "20px", xl: "20px" }}
-        display={{ base: "block", xl: "grid" }}>
+        gridTemplateColumns={{ width: "100%" }}
+
+      >
 
         <Flex
           flexDirection='column'
-          maxWidth='1366px'>
+          gridArea={{ xl: "1 / 1 / 1 / 1", "2xl": "1 / 2 / 2 / 3" }}>
           <Card px='0px' mb='20px'>
             <TableTopCreators
               tableData={tableDataTopCreators}

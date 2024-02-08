@@ -12,20 +12,30 @@ import {
   Thead,
   Tr,
   useColorModeValue,
+  Modal
 } from "@chakra-ui/react";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import {
   useGlobalFilter,
   usePagination,
   useSortBy,
   useTable,
 } from "react-table";
-
+import CustomModal from './Modal';
+import CreateUser from "./Create";
 function TopCreatorTable(props) {
   const { columnsData, tableData } = props;
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   const tableInstance = useTable(
     {
@@ -58,9 +68,12 @@ function TopCreatorTable(props) {
           mb='10px'
           boxShadow='0px 40px 58px -20px rgba(112, 144, 176, 0.26)'>
           <Text color={textColor} fontSize='xl' fontWeight='600'>
-            Top Creators
+            Users
           </Text>
-          <Button variant='action'>Add New</Button>
+          <Button variant='action' onClick={openModal}>Create Users</Button>
+          <CustomModal isOpen={isModalOpen} onClose={closeModal} modalTitle="Create Users" >
+            <CreateUser />
+          </CustomModal>
         </Flex>
         <Table {...getTableProps()} variant='simple' color='gray.500'>
           <Thead>
