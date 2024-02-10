@@ -14,7 +14,7 @@ import {
   useColorModeValue,
   Modal
 } from "@chakra-ui/react";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   useGlobalFilter,
   usePagination,
@@ -23,12 +23,16 @@ import {
 } from "react-table";
 import CustomModal from './Modal';
 import CreateUser from "./Create";
+import api from "Controllers/api";
+import Toaster from "components/toast/toast";
 function TopCreatorTable(props) {
   const { columnsData, tableData } = props;
+  const [dataFromModal, setDataFromModal] = useState(null);
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -52,7 +56,27 @@ function TopCreatorTable(props) {
 
   const textColor = useColorModeValue("navy.700", "white");
   const textColorSecondary = useColorModeValue("secondaryGray.600", "white");
+  const modalData = async (formdata) => {
+    setDataFromModal(formdata)
 
+
+    console.log("dataFromModal..........");
+    console.log(dataFromModal);
+    console.log("dataFromModal...........");
+  }
+
+
+
+  useEffect(() => {
+    if (dataFromModal != null) {
+      if (dataFromModal.status === "OK") {
+
+
+        closeModal();
+        setDataFromModal(null);
+      }
+    }
+  }, [dataFromModal]);
   return (
     <>
       <Flex
@@ -72,7 +96,7 @@ function TopCreatorTable(props) {
           </Text>
           <Button variant='action' onClick={openModal}>Create Users</Button>
           <CustomModal isOpen={isModalOpen} onClose={closeModal} modalTitle="Create Users" >
-            <CreateUser />
+            <CreateUser formResponse={modalData} onClose={closeModal} />
           </CustomModal>
         </Flex>
         <Table {...getTableProps()} variant='simple' color='gray.500'>
@@ -159,6 +183,7 @@ function TopCreatorTable(props) {
           </Tbody>
         </Table>
       </Flex>
+
     </>
   );
 }
